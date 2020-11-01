@@ -1,0 +1,18 @@
+- ¿Para qué sirva la palabra reservada volatile? ¿Cuándo debemos usarla? 
+
+Para dar a una variable la propiedad de visibilidad de la programación concurrente, esto es, que nos aseguramos de que los cambios
+producidos por un hilo en dicha variable serán "visibles", (serán reconocibles) por otros hilos que posteriormente accedan al recurso.
+
+Debemos usarlas cuando queramos que un valor que se actualiza una o más veces esté sincronizado entre varios hilos. Eso sí, solo uno podrá ejercer
+como escritor y el resto solo como lectores, pues la ecritura del valor actual no tiene porque ir seguida atomicamente de la escritura de un nuevo
+valor en funcion de esa lectura(que un hilo lea el valor  no quiere decir que cuando escriba sobre esa variable volatile no haya escrito ya otro hilo)
+
+Tampoco se debe usar cuando hay un invariante que depende de esa variable volatile.
+
+
+
+- ¿Asegura la palabra reservada volatile la exclusión mutua? Si no es así, ¿qué es lo que asegura?
+
+No, ya he comentao que precisamente puede un hilo leer un recurso y que entre ese paso y que escriba en él, puede otro hilo realizar escritura.
+Lo que garantiza es la visibilidad. Siempre que un hilo haga la lectura de un recurso, en esa lectura están recogidas todas las escrituras previas
+sobre el recurso(aunque sean de otros hilos).
